@@ -7,6 +7,9 @@ interface UseRouting {
   navigator: History | null;
 }
 
+/**
+ * @see {@link https://developer.atlassian.com/platform/forge/add-routing-to-a-full-page-app/#implement-routing-in-your-app}
+ */
 function useRouting(): UseRouting {
   const [historyState, setHistoryState] = useState<History | null>(null);
   const [navigator, setNavigator] = useState<History | null>(null);
