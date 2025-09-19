@@ -4,6 +4,7 @@ import { Router, Route, Routes } from 'react-router';
 import ReposPage from './repos-page';
 import AuthPage from './auth-page';
 import useRouting from '../../../ui/hooks/useRouting.hook';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const App = () => {
   const { historyState, navigator } = useRouting();
@@ -27,8 +28,17 @@ const App = () => {
     </Box>
   );
 };
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: false },
+  },
+});
+
 ForgeReconciler.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </React.StrictMode>,
 );

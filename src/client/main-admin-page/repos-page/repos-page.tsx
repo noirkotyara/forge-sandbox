@@ -1,14 +1,16 @@
+import { Fragment } from 'react';
 import { Box, Button, EmptyState, Heading, SectionMessage } from '@forge/react';
 import { useNavigate } from 'react-router';
-import useGithub from '../../../ui/hooks/useGithub.hook';
-import { deleteSecret } from '../../../ui/services';
-import { generateUserGithubTokenKey } from '../../services/secret-storage';
-import useAdvancedProductContext from '../../../ui/hooks/useAdvancedProductContext.hook';
+import useGithub from '../../../../ui/hooks/useGithub.hook';
+import { deleteSecret } from '../../../../ui/services';
+import { generateUserGithubTokenKey } from '../../../services/secret-storage';
+import useAdvancedProductContext from '../../../../ui/hooks/useAdvancedProductContext.hook';
+import ReposList from './repos-list';
 
 export default function ReposPage() {
   const { isAccountIdLoaded, accountId } = useAdvancedProductContext();
   const navigate = useNavigate();
-  const { githubToken, githubTokenErrorMessage } = useGithub();
+  const { githubToken, githubTokenErrorMessage, isGithubTokenLoading } = useGithub();
 
   const onDeleteGithubToken = async () => {
     if (!isAccountIdLoaded) {
@@ -18,24 +20,25 @@ export default function ReposPage() {
     navigate('/auth');
   };
 
-  if (!isAccountIdLoaded) {
+  if (!isAccountIdLoaded || isGithubTokenLoading) {
     return <Box>Loading...</Box>;
-  }
-
-  if (githubTokenErrorMessage) {
-    return (
-      <Box paddingBlock="space.100">
-        <SectionMessage appearance="error">{githubTokenErrorMessage}</SectionMessage>
-      </Box>
-    );
   }
 
   return (
     <Box>
       <Heading>Repos Page</Heading>
       <Box paddingBlock="space.100">
+        {githubTokenErrorMessage && (
+          <SectionMessage appearance="error">{githubTokenErrorMessage}</SectionMessage>
+        )}
+
         {githubToken ? (
-          <Button onClick={onDeleteGithubToken}>Delete GitHub Token</Button>
+          <Fragment>
+            <Button onClick={onDeleteGithubToken}>Delete GitHub Token</Button>
+            <Box paddingBlock="space.100">
+              <ReposList githubToken={githubToken} />
+            </Box>
+          </Fragment>
         ) : (
           <EmptyState
             header="You are not authenticated, please authenticate with github token to continue on auth page"
