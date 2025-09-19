@@ -2,7 +2,7 @@ modules:
   jira:adminPage:
     - key: admin-page-example-hello-world-admin-page
       resource: main-admin-page
-      title: Admin page example
+      title: Admin page
       render: native
       resolver:
         function: resolver
@@ -41,3 +41,12 @@ app:
     memoryMB: 256
     architecture: arm64
   id: ari:cloud:ecosystem::app/c57073a2-9ffb-4afd-88b2-794a86d6a8c1
+permissions:
+  scopes:
+    - storage:app
+  external:
+    fetch:
+      backend:
+        - '*.github.com'
+      client:
+        - '*.github.com'
