@@ -1,6 +1,6 @@
 import { Box, Heading, Button, SectionMessage, EmptyState } from '@forge/react';
-import useGithub from '../../../ui/hooks/useGithub.hook';
-import useAdvancedProductContext from '../../../ui/hooks/useAdvancedProductContext.hook';
+import useGithub from '../../../../ui/hooks/useGithub.hook';
+import useAdvancedProductContext from '../../../../ui/hooks/useAdvancedProductContext.hook';
 import AuthForm from './auth-form';
 import { useNavigate } from 'react-router';
 
@@ -9,7 +9,6 @@ export default function AuthPage() {
   const { githubToken, githubTokenErrorMessage, isGithubTokenLoading } = useGithub();
   const navigate = useNavigate();
 
-  // TODO: global app loading state
   if (!isAccountIdLoaded || isGithubTokenLoading) {
     return <Box>Loading...</Box>;
   }

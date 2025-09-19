@@ -12,9 +12,9 @@ import {
   useForm,
 } from '@forge/react';
 import { useState } from 'react';
-import { validateGithubToken } from '../../utils/github';
-import { generateUserGithubTokenKey } from '../../services/secret-storage';
-import { setSecret } from '../../../ui/services';
+import { validateGithubToken } from '../../../utils/github';
+import { generateUserGithubTokenKey } from '../../../services/secret-storage';
+import { setSecret } from '../../../../ui/services';
 import { useNavigate } from 'react-router';
 
 interface AuthFormProps {

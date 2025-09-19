@@ -1,5 +1,5 @@
 import { useProductContext } from '@forge/react';
-import ProductContext from '../types/ProductContext.interface';
+import ProductContext from '../../src/types/ProductContext.interface';
 import { useMemo } from 'react';
 
 function useAdvancedProductContext() {
