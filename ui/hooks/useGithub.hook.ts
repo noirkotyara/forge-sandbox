@@ -1,33 +1,27 @@
-import { useEffect, useState } from 'react';
 import { generateUserGithubTokenKey } from '../../src/services/secret-storage';
 import { getSecret } from '../services';
 import useAdvancedProductContext from './useAdvancedProductContext.hook';
+import { useQuery } from '@tanstack/react-query';
 
 function useGithub() {
   const { isAccountIdLoaded, accountId } = useAdvancedProductContext();
-  const [githubToken, setGithubToken] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (isAccountIdLoaded) {
+  const { data, isLoading, error, isFetching } = useQuery({
+    queryKey: ['github', 'token'],
+    queryFn: async () => {
       const tokenKey = generateUserGithubTokenKey(accountId!);
-      getSecret(tokenKey)
-        .then((token) => {
-          if (typeof token === 'string') {
-            setGithubToken(token as string);
-          } else {
-            setGithubToken(null);
-          }
-        })
-        .catch(() => {
-          setErrorMessage('Error getting Github Token');
-        });
-    }
-  }, [isAccountIdLoaded]);
+      const res = await getSecret(tokenKey);
+
+      return typeof res === 'string' ? res : null;
+    },
+    refetchOnMount: true,
+    enabled: isAccountIdLoaded,
+    retry: false,
+  });
 
   return {
-    githubToken,
-    githubTokenErrorMessage: errorMessage,
+    githubToken: data,
+    githubTokenErrorMessage: error?.message,
+    isGithubTokenLoading: isLoading || isFetching,
   };
 }
 

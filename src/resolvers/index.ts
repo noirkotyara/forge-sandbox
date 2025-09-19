@@ -1,5 +1,5 @@
 import Resolver, { Request } from '@forge/resolver';
-import { deleteSecret, getSecret, setSecret } from '../services';
+import { deleteSecret, getSecret, setSecret, getGithubRepos } from '../services';
 
 const resolver = new Resolver();
 
@@ -14,6 +14,10 @@ resolver.define('getSecret', async (req: Request<{ key: string }>) => {
 
 resolver.define('deleteSecret', async (req: Request<{ key: string }>) => {
   return deleteSecret(req.payload.key);
+});
+
+resolver.define('getGithubRepos', async (req: Request<{ githubToken: string }>) => {
+  return getGithubRepos(req.payload.githubToken);
 });
 
 export const handler = resolver.getDefinitions();
