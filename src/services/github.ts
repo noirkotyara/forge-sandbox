@@ -1,4 +1,6 @@
-export async function getGithubRepos(githubToken: string) {
+import GithubRepo from '../types/GithubRepo.interface';
+
+export async function getGithubRepos(githubToken: string): Promise<GithubRepo[]> {
   // TODO: move to env
   const url = new URL('https://api.github.com/user/repos');
   url.searchParams.set('type', 'owner');

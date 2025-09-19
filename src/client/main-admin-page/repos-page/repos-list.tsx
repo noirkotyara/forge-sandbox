@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { getGithubRepos } from '../../../services';
+
 import { Box } from '@forge/react';
-import GithubRepo from '../../../../ui/types/GithubRepo.interface';
 import RepoCard from './repo-card';
+import { getGithubRepos } from '../../../../ui/services';
 
 interface ReposListProps {
   githubToken: string;
@@ -30,7 +30,7 @@ function ReposList(props: ReposListProps) {
       {data?.length === 0 ? (
         <Box>No repos found</Box>
       ) : (
-        data?.map((repo: GithubRepo) => <RepoCard key={repo.id} repo={repo} />)
+        data?.map((repo) => <RepoCard key={repo.id} repo={repo} />)
       )}
     </Box>
   );

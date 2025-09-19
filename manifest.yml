@@ -47,6 +47,6 @@ permissions:
   external:
     fetch:
       backend:
-        - '*.github.com'
+        - address: "*.github.com"
       client:
-        - '*.github.com'
+        - address: "*.github.com"
