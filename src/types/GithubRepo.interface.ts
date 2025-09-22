@@ -52,11 +52,11 @@ interface GithubRepo {
   ssh_url: string;
   clone_url: string;
   svn_url: string;
-  homepage: any;
+  homepage: unknown;
   size: number;
   stargazers_count: number;
   watchers_count: number;
-  language: any;
+  language: string;
   has_issues: boolean;
   has_projects: boolean;
   has_downloads: boolean;
@@ -64,7 +64,7 @@ interface GithubRepo {
   has_pages: boolean;
   has_discussions: boolean;
   forks_count: number;
-  mirror_url: any;
+  mirror_url: unknown;
   archived: boolean;
   disabled: boolean;
   open_issues_count: number;

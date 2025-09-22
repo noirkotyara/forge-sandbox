@@ -1,5 +1,6 @@
 import { invoke } from '@forge/bridge';
 import GithubRepo from '../../src/types/GithubRepo.interface';
+import LinkedPR from '../../src/types/LinkedPR.interface';
 
 export async function setSecret(key: string, value: string) {
   return invoke('setSecret', {
@@ -18,4 +19,8 @@ export async function deleteSecret(key: string) {
 
 export async function getGithubRepos(githubToken: string): Promise<GithubRepo[]> {
   return invoke('getGithubRepos', { githubToken });
+}
+
+export async function getGithubLinkedPRs(fullRepoName: string): Promise<LinkedPR[]> {
+  return invoke('getGithubLinkedPRs', { fullRepoName });
 }

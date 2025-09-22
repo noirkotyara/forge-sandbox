@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { Box } from '@forge/react';
+import { Box, Inline } from '@forge/react';
 import RepoCard from './repo-card';
 import { getGithubRepos } from '../../../../ui/services';
+import GithubRepo from '../../../types/GithubRepo.interface';
 
 interface ReposListProps {
   githubToken: string;
@@ -10,7 +11,7 @@ interface ReposListProps {
 
 function ReposList(props: ReposListProps) {
   const { githubToken } = props;
-  const { data, isLoading, error, isFetching } = useQuery({
+  const { data, isLoading, error, isFetching } = useQuery<GithubRepo[]>({
     queryKey: ['github', 'repos'],
     queryFn: async () => getGithubRepos(githubToken),
     refetchOnMount: true,
@@ -25,14 +26,16 @@ function ReposList(props: ReposListProps) {
     return <Box>Failed to load repos. Your github token is invalid or not valid anymore.</Box>;
   }
 
+  if (!data?.length) {
+    return <Box>No repos found</Box>;
+  }
+
   return (
-    <Box>
-      {data?.length === 0 ? (
-        <Box>No repos found</Box>
-      ) : (
-        data?.map((repo) => <RepoCard key={repo.id} repo={repo} />)
-      )}
-    </Box>
+    <Inline space="space.200" shouldWrap>
+      {data?.map((repo) => (
+        <RepoCard key={repo.id} repo={repo} />
+      ))}
+    </Inline>
   );
 }
 
