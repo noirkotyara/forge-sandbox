@@ -24,3 +24,11 @@ export async function getGithubRepos(githubToken: string): Promise<GithubRepo[]>
 export async function getGithubLinkedPRs(fullRepoName: string): Promise<LinkedPR[]> {
   return invoke('getGithubLinkedPRs', { fullRepoName });
 }
+
+export async function mergeGithubRepoPullRequest(
+  githubToken: string,
+  fullRepoName: string,
+  prNumber: number,
+): Promise<void> {
+  return invoke('mergeGithubRepoPullRequest', { githubToken, fullRepoName, prNumber });
+}

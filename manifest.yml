@@ -28,6 +28,13 @@ modules:
   function:
     - key: resolver
       handler: index.handler
+    - key: webhook-handler
+      handler: index.webhookHandler
+  webtrigger:
+    - key: webhook
+      function: webhook-handler
+      response:
+        type: dynamic
 resources:
   - key: main-admin-page
     path: src/client/main-admin-page/index.tsx
