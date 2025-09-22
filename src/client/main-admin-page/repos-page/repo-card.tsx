@@ -11,14 +11,15 @@ import {
   ModalHeader,
   ModalTitle,
   ModalTransition,
+  SectionMessage,
   Stack,
   Text,
   xcss,
 } from '@forge/react';
 import GithubRepo from '../../../types/GithubRepo.interface';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getGithubLinkedPRs } from '../../../../ui/services';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getGithubLinkedPRs, mergeGithubRepoPullRequest } from '../../../../ui/services';
 import LinkedPR from '../../../types/LinkedPR.interface';
 
 const textStyle = xcss({
@@ -39,16 +40,30 @@ const cardStyle = xcss({
 });
 interface RepoCardProps {
   repo: GithubRepo;
+  githubToken: string;
 }
 
 function RepoCard(props: RepoCardProps) {
-  const { repo } = props;
+  const { repo, githubToken } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery<LinkedPR[]>({
+  const { data, isLoading, isFetching } = useQuery<LinkedPR[]>({
     queryKey: ['github', 'linkedPRs', repo.id],
     queryFn: async () => getGithubLinkedPRs(repo.full_name),
     enabled: isOpen,
+  });
+
+  const {
+    mutate: mergePR,
+    error: mergePRError,
+    isPending: isMergePRPending,
+  } = useMutation<void, Error, { repoFullName: string; prNumber: number }>({
+    mutationFn: async ({ repoFullName, prNumber }) =>
+      await mergeGithubRepoPullRequest(githubToken, repoFullName, prNumber),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['github', 'linkedPRs', repo.id] });
+    },
   });
 
   const openModal = () => {
@@ -73,12 +88,14 @@ function RepoCard(props: RepoCardProps) {
         {isOpen && (
           <Modal onClose={closeModal}>
             <ModalHeader>
-              <ModalTitle>Duplicate this page</ModalTitle>
+              <ModalTitle>Linked PRs</ModalTitle>
             </ModalHeader>
             <ModalBody>
-              {data?.length === 0 && <Text>No linked PRs</Text>}
-              {isLoading && <Box>Loading...</Box>}
-              {data && data.length > 0 && (
+              {isLoading || isMergePRPending || isFetching ? (
+                <Box>Loading...</Box>
+              ) : !data?.length ? (
+                <Text>No linked PRs</Text>
+              ) : (
                 <Box>
                   {data.map((linkedPR) => {
                     return (
@@ -86,10 +103,25 @@ function RepoCard(props: RepoCardProps) {
                         <Text>{linkedPR.pr.title}</Text>
                         <Lozenge>{linkedPR.jiraIssue.fields.status.name}</Lozenge>
                         <Link href={linkedPR.pr._links.html.href}>Open PR</Link>
+                        <Button
+                          appearance="primary"
+                          onClick={() =>
+                            mergePR({
+                              repoFullName: linkedPR.pr.base.repo.full_name,
+                              prNumber: linkedPR.pr.number,
+                            })
+                          }
+                          isDisabled={isMergePRPending}
+                        >
+                          Merge PR
+                        </Button>
                       </Inline>
                     );
                   })}
                 </Box>
+              )}
+              {mergePRError && (
+                <SectionMessage appearance="error">{mergePRError.message}</SectionMessage>
               )}
             </ModalBody>
             <ModalFooter>

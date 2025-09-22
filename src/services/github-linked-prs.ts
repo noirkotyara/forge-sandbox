@@ -5,8 +5,8 @@ import { getJiraIssue } from './jira';
 
 const JIRA_ISSUE_PREFIX = 'BAJ-';
 
-function getPullRequestTitlePrefix(pr: GithubRepoPullRequest): string | null {
-  const prTitlePrefix = pr.title.split(' ')[0]?.replace(/[:.,!?]/, '');
+export function getPullRequestTitlePrefix(pr: GithubRepoPullRequest): string | null {
+  const prTitlePrefix = pr.head.ref.split('/')[1]?.replace(/[:.,!?]/, '');
   if (prTitlePrefix?.startsWith(JIRA_ISSUE_PREFIX)) {
     return prTitlePrefix;
   }

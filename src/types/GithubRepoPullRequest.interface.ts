@@ -1,3 +1,5 @@
+import GithubRepo from './GithubRepo.interface';
+
 interface GithubRepoPullRequest {
   url: string;
   id: number;
@@ -29,7 +31,7 @@ interface GithubRepoPullRequest {
   review_comment_url: string;
   comments_url: string;
   statuses_url: string;
-  head: unknown;
+  head: Base;
   base: Base;
   _links: Links;
   author_association: string;
@@ -84,7 +86,7 @@ export interface Base {
   ref: string;
   sha: string;
   user: User;
-  repo: unknown;
+  repo: GithubRepo;
 }
 
 interface Links {

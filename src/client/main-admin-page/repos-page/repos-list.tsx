@@ -32,8 +32,8 @@ function ReposList(props: ReposListProps) {
 
   return (
     <Inline space="space.200" shouldWrap>
-      {data?.map((repo) => (
-        <RepoCard key={repo.id} repo={repo} />
+      {data?.map((repo: GithubRepo) => (
+        <RepoCard key={repo.id} repo={repo} githubToken={githubToken} />
       ))}
     </Inline>
   );
