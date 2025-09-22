@@ -48,7 +48,7 @@ function RepoCard(props: RepoCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isFetching } = useQuery<LinkedPR[]>({
+  const { data, isLoading } = useQuery<LinkedPR[]>({
     queryKey: ['github', 'linkedPRs', repo.id],
     queryFn: async () => getGithubLinkedPRs(repo.full_name),
     enabled: isOpen,
@@ -91,7 +91,7 @@ function RepoCard(props: RepoCardProps) {
               <ModalTitle>Linked PRs</ModalTitle>
             </ModalHeader>
             <ModalBody>
-              {isLoading || isMergePRPending || isFetching ? (
+              {isLoading || isMergePRPending ? (
                 <Box>Loading...</Box>
               ) : !data?.length ? (
                 <Text>No linked PRs</Text>

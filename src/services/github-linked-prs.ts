@@ -34,7 +34,10 @@ export async function getGithubLinkedPRs(fullRepoName: string): Promise<LinkedPR
 
         linkedPrs.push({ pr, jiraIssue });
       } catch (error) {
-        console.error(`Error fetching Jira issue for PR ${prTitlePrefix}: ${error}`);
+        console.error('[services.getGithubLinkedPRs] Error fetching Jira issue for PR', {
+          prTitlePrefix,
+          error,
+        });
       }
     }),
   );

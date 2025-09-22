@@ -25,7 +25,7 @@ export async function webhookHandler(event: WebhookEvent): Promise<WebhookHandle
       statusText: 'OK',
     };
   } catch (error) {
-    console.error('Error:', error);
+    console.error('[webhooks.webhookHandler]', { error });
     return {
       statusCode: 500,
       statusText: 'Internal Server Error',

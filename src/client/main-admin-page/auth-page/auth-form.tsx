@@ -39,7 +39,7 @@ function AuthForm(props: AuthFormProps) {
 
       navigate('/repos');
     } catch (error) {
-      console.error('[fs]:onSubmit', error);
+      console.error('AuthForm:onSubmit', error);
       setAuthError('Unable to save GitHub token');
     }
   };
