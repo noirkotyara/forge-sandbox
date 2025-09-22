@@ -43,6 +43,5 @@ export async function getGithubLinkedPRs(fullRepoName: string): Promise<LinkedPR
     return [];
   }
 
-  console.log('linkedPrs', JSON.stringify(linkedPrs, null, 2));
   return linkedPrs;
 }

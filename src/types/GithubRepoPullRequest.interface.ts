@@ -87,46 +87,18 @@ export interface Base {
   repo: unknown;
 }
 
-export interface Links {
-  self: Self;
-  html: Html;
-  issue: Issue;
-  comments: Comments;
-  review_comments: ReviewComments;
-  review_comment: ReviewComment;
-  commits: Commits;
-  statuses: Statuses;
+interface Links {
+  self: Link;
+  html: Link;
+  issue: Link;
+  comments: Link;
+  review_comments: Link;
+  review_comment: Link;
+  commits: Link;
+  statuses: Link;
 }
 
-export interface Self {
-  href: string;
-}
-
-export interface Html {
-  href: string;
-}
-
-export interface Issue {
-  href: string;
-}
-
-export interface Comments {
-  href: string;
-}
-
-export interface ReviewComments {
-  href: string;
-}
-
-export interface ReviewComment {
-  href: string;
-}
-
-export interface Commits {
-  href: string;
-}
-
-export interface Statuses {
+interface Link {
   href: string;
 }
 

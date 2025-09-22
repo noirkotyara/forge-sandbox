@@ -3,6 +3,7 @@ import {
   Button,
   Heading,
   Inline,
+  Link,
   Lozenge,
   Modal,
   ModalBody,
@@ -79,12 +80,15 @@ function RepoCard(props: RepoCardProps) {
               {isLoading && <Box>Loading...</Box>}
               {data && data.length > 0 && (
                 <Box>
-                  {data.map((linkedPR) => (
-                    <Inline key={linkedPR.pr.id} space="space.200" alignBlock="center">
-                      <Text>{linkedPR.pr.title}</Text>
-                      <Lozenge>{linkedPR.jiraIssue.fields.status.name}</Lozenge>
-                    </Inline>
-                  ))}
+                  {data.map((linkedPR) => {
+                    return (
+                      <Inline key={linkedPR.pr.id} space="space.200" alignBlock="center">
+                        <Text>{linkedPR.pr.title}</Text>
+                        <Lozenge>{linkedPR.jiraIssue.fields.status.name}</Lozenge>
+                        <Link href={linkedPR.pr._links.html.href}>Open PR</Link>
+                      </Inline>
+                    );
+                  })}
                 </Box>
               )}
             </ModalBody>
