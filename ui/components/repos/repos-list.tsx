@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Box, Inline } from '@forge/react';
 import RepoCard from './repo-card';
-import { getGithubRepos } from '../../../../ui/services';
-import GithubRepo from '../../../types/GithubRepo.interface';
+import { getGithubRepos } from '../../services';
+import GithubRepo from '../../../src/types/GithubRepo.interface';
 
 interface ReposListProps {
   githubToken: string;

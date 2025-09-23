@@ -16,11 +16,11 @@ import {
   Text,
   xcss,
 } from '@forge/react';
-import GithubRepo from '../../../types/GithubRepo.interface';
+import GithubRepo from '../../../src/types/GithubRepo.interface';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getGithubLinkedPRs, mergeGithubRepoPullRequest } from '../../../../ui/services';
-import LinkedPR from '../../../types/LinkedPR.interface';
+import { getGithubLinkedPRs, mergeGithubRepoPullRequest } from '../../services';
+import LinkedPR from '../../../src/types/LinkedPR.interface';
 
 const textStyle = xcss({
   color: 'color.text',

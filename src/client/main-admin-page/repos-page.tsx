@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import { Box, Button, EmptyState, Heading, SectionMessage } from '@forge/react';
 import { useNavigate } from 'react-router';
-import useGithub from '../../../../ui/hooks/useGithub.hook';
-import { deleteSecret } from '../../../../ui/services';
-import { generateUserGithubTokenKey } from '../../../services/secret-storage';
-import useAdvancedProductContext from '../../../../ui/hooks/useAdvancedProductContext.hook';
-import ReposList from './repos-list';
+import useGithub from '../../../ui/hooks/useGithub.hook';
+import { deleteSecret } from '../../../ui/services';
+import { generateUserGithubTokenKey } from '../../services/secret-storage';
+import useAdvancedProductContext from '../../../ui/hooks/useAdvancedProductContext.hook';
+import ReposList from '../../../ui/components/repos/repos-list';
 
 export default function ReposPage() {
   const { isAccountIdLoaded, accountId } = useAdvancedProductContext();
