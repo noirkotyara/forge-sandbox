@@ -1,7 +1,7 @@
 import { Box, Heading, Button, SectionMessage, EmptyState } from '@forge/react';
-import useGithub from '../../../../ui/hooks/useGithub.hook';
-import useAdvancedProductContext from '../../../../ui/hooks/useAdvancedProductContext.hook';
-import AuthForm from './auth-form';
+import useGithub from '../../../ui/hooks/useGithub.hook';
+import useAdvancedProductContext from '../../../ui/hooks/useAdvancedProductContext.hook';
+import AuthForm from '../../../ui/components/auth/auth-form';
 import { useNavigate } from 'react-router';
 
 export default function AuthPage() {

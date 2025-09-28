@@ -1,5 +1,5 @@
 import { getPullRequestTitlePrefix } from '../services/github-linked-prs';
-import { markJiraIssueAsDone } from '../services/jira';
+import { markJiraIssueAsDone } from '../services';
 import { WebhookEvent, WebhookGithubHeaders } from '../types/Webhook.interface';
 import { WebhookHandlerResponse } from '../types/Webhook.interface';
 
